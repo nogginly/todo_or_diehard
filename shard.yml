@@ -1,5 +1,5 @@
 name: todo_or_diehard
-version: 0.1.0
+version: 0.2.0
 
 authors:
   - nogginly <nogginly@icloud.com>
@@ -7,15 +7,3 @@ authors:
 crystal: 1.7.2
 
 license: MIT
-
-development_dependencies:
-  ameba:
-    github: crystal-ameba/ameba
-    version: ~> 1.0.0
-  spectator:
-    gitlab: arctic-fox/spectator
-    version: ~> 0.11.0
-
-# dependencies:
-#   debug:
-#     github: Sija/debug.cr
