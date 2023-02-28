@@ -1,6 +1,8 @@
 # TODO or Die Hard
 
-WIP
+![TODO or Die Hard!](assets/todo_or_diehard.png)
+
+`TodoOrDiehard` provides macros for Crystal that implement compile-time and runtime checked reminders.
 
 > Inspired by [todo_or_die](https://github.com/searls/todo_or_die) for Ruby.
 
@@ -21,12 +23,43 @@ WIP
 ```crystal
 require "todo_or_diehard"
 
-# Warns you
-TodoOrDie["Whaaa Whaaa Whaaa!", warn_by: Time.local(2020, 1, 20)]
+# Warning only, does not raise an exception or compile-time error
+TodoOrDie[warning: "Whaaa Whaaa Whaaa!", y: 2020, m: 1, d: 20]
 
 # Raises an OverdueTodo error
-TodoOrDie["Blammo!", by: Time.local(2020, 1, 20)]
+TodoOrDie["Blammo!", y: 2020, m: 2, d: 28]
 ```
+
+### Warning only
+
+```crystal
+TodoOrDie[warning: "Whaaa Whaaa Whaaa!", y: 2020, m: 1, d: 20]
+```
+
+* If overdue
+  * logs a warning
+  * does not raise a compile time error or a run-time error
+* Otherwise
+  * logs an `Info` at compile-time
+
+
+### Die hard (if overdue)
+
+```crystal
+TodoOrDie["Blammo!", y: 2020, m: 2, d: 28]
+```
+
+* If overdue
+  * raises a compile time error when building
+  * raises a run-time error when run after deadline
+* Otherwise
+  * logs an `Info` at compile-time
+
+## Q&A
+
+**Why can't I use `Time` to set the deadline?**
+
+The standard library is not available at compile-time, and for this to work with macros we can't use `Time`. As a side benefit, this made the API simpler by asking for year, month, date arguments.
 
 ## Contributing
 
@@ -36,4 +69,4 @@ This project is intended to be a safe, welcoming space for collaboration, and co
 
 ## Contributors
 
-- [nogginly](https://github.com/nogginly) - creator and maintainer
+* [nogginly](https://github.com/nogginly) - creator and maintainer
