@@ -6,7 +6,7 @@ alias TodoOrDie = TodoOrDiehard
 # The module
 module TodoOrDiehard
   # The version
-  VERSION = "0.2.0"
+  VERSION = "0.3.0"
 
   {% if compile_date = system("date +%Y%m%d") %}
     # The date when compiled, as a number in the form `yyyymmdd`
@@ -15,6 +15,32 @@ module TodoOrDiehard
 
   # The error
   class OverdueTodo < RuntimeError
+  end
+
+  # The checked reminder that a raises an error on or after *by* date specified as a
+  # tuple (e.g. `{2019, 10, 30}`) or array (e.g. `[2019, 10, 30]`)
+  macro [](message, *, by)
+    {% if (by.is_a? TupleLiteral || by.is_a? ArrayLiteral) && by.size == 3 %}
+      {% y = by[0] %}
+      {% m = by[1] %}
+      {% d = by[2] %}
+      TodoOrDiehard[{{message}}, y: {{ y }}, m: {{m}}, d: {{d}}]
+    {% else %}
+      {% raise "Invalid deadline #{by}, must be array or tuple with three integers" %}
+    {% end %}
+  end
+
+  # The checked reminder that will log a warning on or after *warn_by* date specified as a
+  # tuple (e.g. `{2019, 10, 30}`) or array (e.g. `[2019, 10, 30]`)
+  macro [](message, *, warn_by)
+    {% if (warn_by.is_a? TupleLiteral || warn_by.is_a? ArrayLiteral) && warn_by.size == 3 %}
+      {% y = warn_by[0] %}
+      {% m = warn_by[1] %}
+      {% d = warn_by[2] %}
+      TodoOrDiehard[warning: {{message}}, y: {{ y }}, m: {{m}}, d: {{d}}]
+    {% else %}
+      {% raise "Invalid deadline #{warn_by}, must be array or tuple with three integers" %}
+    {% end %}
   end
 
   # The check that raises an error when overdue

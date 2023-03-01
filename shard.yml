@@ -1,9 +1,9 @@
 name: todo_or_diehard
-version: 0.2.0
+version: 0.3.0
 
 authors:
   - nogginly <nogginly@icloud.com>
 
-crystal: 1.7.2
+crystal: 1.6.0
 
 license: MIT
