@@ -24,15 +24,17 @@
 require "todo_or_diehard"
 
 # Warning only, does not raise an exception or compile-time error
-TodoOrDie[warning: "Whaaa Whaaa Whaaa!", y: 2020, m: 1, d: 20]
+TodoOrDie["Whaaa Whaaa Whaaa!", warn_by: {2020, 1, 20}]
 
 # Raises an OverdueTodo error
-TodoOrDie["Blammo!", y: 2020, m: 2, d: 28]
+TodoOrDie["Blammo!", by: [2020, 2, 28]]
 ```
 
 ### Warning only
 
 ```crystal
+TodoOrDie["Whaaa Whaaa Whaaa!", warn_by: {2020, 1, 20}]
+# or
 TodoOrDie[warning: "Whaaa Whaaa Whaaa!", y: 2020, m: 1, d: 20]
 ```
 
@@ -46,6 +48,8 @@ TodoOrDie[warning: "Whaaa Whaaa Whaaa!", y: 2020, m: 1, d: 20]
 ### Die hard (if overdue)
 
 ```crystal
+TodoOrDie["Blammo!", by: [2020, 2, 28]]
+# or
 TodoOrDie["Blammo!", y: 2020, m: 2, d: 28]
 ```
 
